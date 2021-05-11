@@ -18,6 +18,6 @@ jobs:
         run: mvn clean package
       - uses: azure/webapps-deploy@v2
         with:
-          app-name: 'tp-wood-api-rest'
+          app-name: 'knowledge-cybersecurity-rest'
           publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }} 
           package: '${{ github.workspace }}/target/*.jar'
