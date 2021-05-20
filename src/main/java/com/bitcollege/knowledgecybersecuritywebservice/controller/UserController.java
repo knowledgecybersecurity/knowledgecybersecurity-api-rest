@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.bitcollege.knowledgecybersecuritywebservice.dto.CreateUserDTO;
 import com.bitcollege.knowledgecybersecuritywebservice.dto.GetUserDTO;
+import com.bitcollege.knowledgecybersecuritywebservice.dto.LoginResponse;
+import com.bitcollege.knowledgecybersecuritywebservice.dto.LoginUserDTO;
 import com.bitcollege.knowledgecybersecuritywebservice.service.IUserService;
 
 @RestController
@@ -67,6 +69,19 @@ public class UserController {
 	public ResponseEntity<?> list(@PathVariable Long id) {
 		try {
 			GetUserDTO userToRespond = this.userService.getUserById(id);
+			return ResponseEntity.status(HttpStatus.OK).body(userToRespond);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.OK).body(e);
+		}
+		
+	}
+	
+	@PostMapping(value = "/login")
+	public ResponseEntity<?> login(@RequestBody LoginUserDTO loginUserDTO) {
+		try {
+			LoginResponse userToRespond = this.userService.login(loginUserDTO.getEmail(), loginUserDTO.getPassword());
 			return ResponseEntity.status(HttpStatus.OK).body(userToRespond);
 			
 		} catch (Exception e) {

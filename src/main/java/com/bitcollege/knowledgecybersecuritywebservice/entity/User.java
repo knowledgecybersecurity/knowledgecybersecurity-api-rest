@@ -42,4 +42,6 @@ public class User {
     @Column(nullable = true)
     private String address;
     
+    @Column(nullable = false)
+    private String rol;
 }
