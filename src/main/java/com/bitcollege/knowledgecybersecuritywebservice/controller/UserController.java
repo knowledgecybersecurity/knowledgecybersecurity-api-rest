@@ -34,7 +34,7 @@ public class UserController {
 			
 		} catch (Exception e) {
 			e.printStackTrace();
-			return ResponseEntity.status(HttpStatus.OK).body(e);
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e);
 		}
 		
 	}
@@ -47,7 +47,7 @@ public class UserController {
 			
 		} catch (Exception e) {
 			e.printStackTrace();
-			return ResponseEntity.status(HttpStatus.OK).body(e);
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e);
 		}
 		
 	}
@@ -60,7 +60,7 @@ public class UserController {
 			
 		} catch (Exception e) {
 			e.printStackTrace();
-			return ResponseEntity.status(HttpStatus.OK).body(e);
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e);
 		}
 		
 	}
@@ -73,7 +73,7 @@ public class UserController {
 			
 		} catch (Exception e) {
 			e.printStackTrace();
-			return ResponseEntity.status(HttpStatus.OK).body(e);
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e);
 		}
 		
 	}
@@ -86,7 +86,7 @@ public class UserController {
 			
 		} catch (Exception e) {
 			e.printStackTrace();
-			return ResponseEntity.status(HttpStatus.OK).body(e);
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e);
 		}
 		
 	}
