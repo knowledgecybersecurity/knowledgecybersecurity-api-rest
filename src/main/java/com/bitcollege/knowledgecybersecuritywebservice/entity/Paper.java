@@ -31,7 +31,6 @@ public class Paper {
     private String documentType;
     private Boolean isFavorite;
 
-
     @JsonIgnore
     @ManyToMany(mappedBy = "papers")
     private List<KnowledgeUnit> knowledgeUnits;
