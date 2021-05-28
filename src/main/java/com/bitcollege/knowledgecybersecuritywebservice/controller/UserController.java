@@ -2,6 +2,8 @@ package com.bitcollege.knowledgecybersecuritywebservice.controller;
 
 import java.util.List;
 
+import com.bitcollege.knowledgecybersecuritywebservice.entity.Paper;
+import com.bitcollege.knowledgecybersecuritywebservice.entity.UserPaper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -90,5 +92,27 @@ public class UserController {
 		}
 		
 	}
-	
+
+	@GetMapping(value = "/{idUser}/{idPaper}")
+	public ResponseEntity<?> list(@PathVariable Long idUser, @PathVariable Long idPaper) {
+		try {
+			UserPaper userPaper = this.userService.addFavoritePaper(idUser, idPaper);
+			return ResponseEntity.status(HttpStatus.OK).body(userPaper);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e);
+		}
+	}
+
+	@GetMapping(value = "/findFavorite/{idUser}")
+	public ResponseEntity<?> listUserFavoritePapers(@PathVariable Long idUser) {
+		try {
+			List<Paper> favoritePapers = this.userService.listUserFavoritePapers(idUser);
+			return ResponseEntity.status(HttpStatus.OK).body(favoritePapers);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e);
+		}
+	}
+
 }

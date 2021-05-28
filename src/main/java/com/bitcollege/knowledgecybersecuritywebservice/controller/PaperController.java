@@ -2,6 +2,7 @@ package com.bitcollege.knowledgecybersecuritywebservice.controller;
 
 import com.bitcollege.knowledgecybersecuritywebservice.entity.Paper;
 import com.bitcollege.knowledgecybersecuritywebservice.service.PaperService;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -42,4 +43,15 @@ public class PaperController {
                 author.isEmpty() ? null : author
         );
     }
+/*
+    @GetMapping("/knowledge-units/changefavorite/{id}/{isFavorite}")
+    public Paper changeFavorite(@PathVariable Long id, @PathVariable Boolean isFavorite) {
+        return this.paperService.changeAsFavorite(id, isFavorite);
+    }
+
+    @GetMapping("/knowledge-units/findFavorites")
+    public List<Paper> changeFavorite() {
+        return this.paperService.findFavorites();
+    }
+*/
 }

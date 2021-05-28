@@ -1,15 +1,14 @@
 package com.bitcollege.knowledgecybersecuritywebservice.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.List;
 
 @Entity
 @Getter
@@ -44,4 +43,8 @@ public class User {
     
     @Column(nullable = false)
     private String rol;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "user")
+    private List<UserPaper> userPapers;
 }

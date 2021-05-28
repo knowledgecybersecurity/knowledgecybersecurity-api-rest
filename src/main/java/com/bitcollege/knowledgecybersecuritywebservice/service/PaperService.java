@@ -14,4 +14,9 @@ public interface PaperService {
                                    String title,
                                    String doi,
                                    String author);
+
+    //public Paper changeAsFavorite(Long id, Boolean isFavorite);
+
+    //public List<Paper> findFavorites();
+
 }

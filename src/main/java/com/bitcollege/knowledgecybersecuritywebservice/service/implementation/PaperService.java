@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -44,4 +45,25 @@ public class PaperService implements com.bitcollege.knowledgecybersecuritywebser
         return query.getResultList();
          */
     }
+/*
+    @Override
+    public Paper changeAsFavorite(Long id, Boolean isFavorite) {
+        Paper paperFinded = this.paperRepository.findById(id).orElse(null);
+
+        if(paperFinded == null) {
+            return null;
+        }
+
+        paperFinded.setIsFavorite(isFavorite);
+
+        return this.paperRepository.save(paperFinded);
+    }
+
+    @Override
+    public List<Paper> findFavorites() {
+        List<Paper> favoritePapers = this.paperRepository.findByIsFavorite(true);
+        return favoritePapers;
+    }
+
+*/
 }

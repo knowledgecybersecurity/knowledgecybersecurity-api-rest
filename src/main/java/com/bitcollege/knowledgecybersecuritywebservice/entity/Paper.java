@@ -32,6 +32,10 @@ public class Paper {
     private Boolean isFavorite;
 
     @JsonIgnore
+    @OneToMany(mappedBy = "paper")
+    private List<UserPaper> userPapers;
+
+    @JsonIgnore
     @ManyToMany(mappedBy = "papers")
     private List<KnowledgeUnit> knowledgeUnits;
 

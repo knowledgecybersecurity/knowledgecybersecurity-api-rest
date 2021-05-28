@@ -35,4 +35,6 @@ public interface PaperRepository extends JpaRepository<Paper, Long> {
                                         String doi,
                                         String author);
 
+    public List<Paper> findByIsFavorite(Boolean isFavorite);
+
 }

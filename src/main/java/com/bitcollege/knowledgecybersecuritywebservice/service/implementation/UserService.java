@@ -4,6 +4,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.bitcollege.knowledgecybersecuritywebservice.data.IUserPaperRepository;
+import com.bitcollege.knowledgecybersecuritywebservice.entity.Paper;
+import com.bitcollege.knowledgecybersecuritywebservice.entity.UserPaper;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -26,6 +29,9 @@ public class UserService implements IUserService {
 
 	@Autowired
 	private IUserRepository userRepo;
+
+	@Autowired
+	private IUserPaperRepository userPaperRepository;
 	
 	@Autowired
 	private ModelMapper modelMapper;
@@ -150,6 +156,23 @@ public class UserService implements IUserService {
 		} else {
 			throw new Exception("No existe cuenta");
 		}
+	}
+
+	@Override
+	public UserPaper addFavoritePaper(Long idUser, Long idPaper) throws Exception {
+		UserPaper userPaper = new UserPaper();
+		userPaper.setIdPaper(idPaper);
+		userPaper.setIdUser(idUser);
+
+		UserPaper userpaperCreated = this.userPaperRepository.save(userPaper);
+		return userpaperCreated;
+	}
+
+	@Override
+	public List<Paper> listUserFavoritePapers(Long idUser) throws Exception {
+		List<UserPaper> userPapers = this.userPaperRepository.findByIdUser(idUser);
+		List<Paper> papers = userPapers.stream().map(x -> x.getPaper()).collect(Collectors.toList());
+		return papers;
 	}
 
 }
