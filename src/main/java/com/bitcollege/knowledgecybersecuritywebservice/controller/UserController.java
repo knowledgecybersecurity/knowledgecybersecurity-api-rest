@@ -94,7 +94,7 @@ public class UserController {
 	}
 
 	@GetMapping(value = "/{idUser}/{idPaper}")
-	public ResponseEntity<?> list(@PathVariable Long idUser, @PathVariable Long idPaper) {
+	public ResponseEntity<?> markAsFavorite(@PathVariable Long idUser, @PathVariable Long idPaper) {
 		try {
 			UserPaper userPaper = this.userService.addFavoritePaper(idUser, idPaper);
 			return ResponseEntity.status(HttpStatus.OK).body(userPaper);
