@@ -29,6 +29,7 @@ public class Paper {
     private String authorKeyword;
     private String source;
     private String documentType;
+    private Boolean isFavorite;
 
 
     @JsonIgnore
