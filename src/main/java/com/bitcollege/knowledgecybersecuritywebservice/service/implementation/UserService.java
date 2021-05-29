@@ -169,6 +169,14 @@ public class UserService implements IUserService {
 	}
 
 	@Override
+	public Boolean removeFavoritePaper(Long idUser, Long idPaper) throws Exception {
+		UserPaper userPaperToRemove = this.userPaperRepository.findByIdUserAndIdPaper(idUser, idPaper);
+		Long idUserPaperToDelete = userPaperToRemove.getIdUser();
+		this.userPaperRepository.deleteById(idUserPaperToDelete);
+		return true;
+	}
+
+	@Override
 	public List<Paper> listUserFavoritePapers(Long idUser) throws Exception {
 		List<UserPaper> userPapers = this.userPaperRepository.findByIdUser(idUser);
 		List<Paper> papers = userPapers.stream().map(x -> x.getPaper()).collect(Collectors.toList());

@@ -104,6 +104,17 @@ public class UserController {
 		}
 	}
 
+	@GetMapping(value = "/unmarked/{idUser}/{idPaper}")
+	public ResponseEntity<?> unMarkAsFavorite(@PathVariable Long idUser, @PathVariable Long idPaper) {
+		try {
+			this.userService.removeFavoritePaper(idUser, idPaper);
+			return ResponseEntity.status(HttpStatus.OK).body(true);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e);
+		}
+	}
+
 	@GetMapping(value = "/findFavorite/{idUser}")
 	public ResponseEntity<?> listUserFavoritePapers(@PathVariable Long idUser) {
 		try {

@@ -10,17 +10,19 @@ import com.bitcollege.knowledgecybersecuritywebservice.entity.UserPaper;
 
 public interface IUserService {
 	
-	public GetUserDTO create(CreateUserDTO userToCreate) throws Exception;
+	GetUserDTO create(CreateUserDTO userToCreate) throws Exception;
 	
-	public GetUserDTO update(GetUserDTO userToUpdate) throws Exception;
+	GetUserDTO update(GetUserDTO userToUpdate) throws Exception;
 	
-	public List<GetUserDTO> list() throws Exception;
+	List<GetUserDTO> list() throws Exception;
 	
-	public GetUserDTO getUserById(Long id) throws Exception;
+	GetUserDTO getUserById(Long id) throws Exception;
 	
-	public LoginResponse login(String email, String password) throws Exception;
+	LoginResponse login(String email, String password) throws Exception;
 
-	public UserPaper addFavoritePaper(Long idUser, Long idPaper) throws Exception;
+	UserPaper addFavoritePaper(Long idUser, Long idPaper) throws Exception;
 
-	public List<Paper> listUserFavoritePapers(Long idUser) throws Exception;
+	List<Paper> listUserFavoritePapers(Long idUser) throws Exception;
+
+	Boolean removeFavoritePaper(Long idUser, Long idPaper) throws Exception;
 }
