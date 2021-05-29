@@ -11,6 +11,6 @@ public interface IUserPaperRepository  extends JpaRepository<UserPaper, Long> {
 
     List<UserPaper> findByIdUser(Long idUser);
 
-    UserPaper findByIdUserAndIdPaper(Long idUser, Long idPaper);
+    List<UserPaper> findByIdUserAndIdPaper(Long idUser, Long idPaper);
 
 }

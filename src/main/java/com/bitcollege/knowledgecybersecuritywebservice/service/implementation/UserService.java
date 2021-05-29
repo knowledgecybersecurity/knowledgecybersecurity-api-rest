@@ -170,9 +170,8 @@ public class UserService implements IUserService {
 
 	@Override
 	public Boolean removeFavoritePaper(Long idUser, Long idPaper) throws Exception {
-		UserPaper userPaperToRemove = this.userPaperRepository.findByIdUserAndIdPaper(idUser, idPaper);
-		Long idUserPaperToDelete = userPaperToRemove.getIdUser();
-		this.userPaperRepository.deleteById(idUserPaperToDelete);
+		List<UserPaper> userPapersToRemove = this.userPaperRepository.findByIdUserAndIdPaper(idUser, idPaper);
+		this.userPaperRepository.deleteAll(userPapersToRemove);
 		return true;
 	}
 
