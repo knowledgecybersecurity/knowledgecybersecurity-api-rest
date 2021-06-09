@@ -47,4 +47,8 @@ public class User {
     @JsonIgnore
     @OneToMany(mappedBy = "user")
     private List<UserPaper> userPapers;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private List<Publication> publications;
 }
