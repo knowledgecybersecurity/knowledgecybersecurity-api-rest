@@ -35,7 +35,6 @@ public class Publication {
     private User user;
     //
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "publication", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "publication", fetch = FetchType.LAZY)
     private List<SectionPublication> sectionPublications;
 }
