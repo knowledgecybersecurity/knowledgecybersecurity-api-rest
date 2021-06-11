@@ -2,12 +2,18 @@ package com.bitcollege.knowledgecybersecuritywebservice.service.implementation;
 
 import com.bitcollege.knowledgecybersecuritywebservice.data.IPublicationRepository;
 import com.bitcollege.knowledgecybersecuritywebservice.data.ISectionPublicationRepository;
+import com.bitcollege.knowledgecybersecuritywebservice.dto.GetUserDTO;
 import com.bitcollege.knowledgecybersecuritywebservice.dto.PublicationDTO;
+import com.bitcollege.knowledgecybersecuritywebservice.dto.PublicationPageDTO;
 import com.bitcollege.knowledgecybersecuritywebservice.entity.Publication;
 import com.bitcollege.knowledgecybersecuritywebservice.entity.SectionPublication;
 import com.bitcollege.knowledgecybersecuritywebservice.service.IPublicationService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -52,6 +58,23 @@ public class PublicationService implements IPublicationService {
     @Override
     public List<Publication> list() throws Exception {
         return this.publicationRepository.findAll();
+    }
+
+    @Override
+    public Page<PublicationPageDTO> listPagination(Integer pageNumber, Integer size) throws Exception {
+        size = (size > 20) ? 20 : size;
+
+        Pageable pageFiltered = PageRequest.of(pageNumber, size, Sort.by("id").descending());
+
+        Page<Publication> publicationsFinded = this.publicationRepository.findAll(pageFiltered);
+
+        Page<PublicationPageDTO>  publicationsFindedDTO= publicationsFinded.map(pagePublication -> {
+            PublicationPageDTO publicationPageDTO = this.modelMapper.map(pagePublication, PublicationPageDTO.class);
+            publicationPageDTO.setUserDTO(this.modelMapper.map(pagePublication.getUser(), GetUserDTO.class));
+            return publicationPageDTO;
+        });
+
+        return publicationsFindedDTO;
     }
 
     @Override
