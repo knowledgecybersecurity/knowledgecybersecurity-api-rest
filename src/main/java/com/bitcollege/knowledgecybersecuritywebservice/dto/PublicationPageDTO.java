@@ -13,6 +13,8 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class PublicationPageDTO {
+    private Long id;
+
     private String title;
 
     private String firstParagraph;
