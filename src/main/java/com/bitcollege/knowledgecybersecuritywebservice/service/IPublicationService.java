@@ -17,6 +17,10 @@ public interface IPublicationService {
 
     Page<PublicationPageDTO> listPagination(Integer pageNumber, Integer size) throws Exception;
 
+    Page<PublicationPageDTO> listPaginationForUserId(Integer pageNumber, Integer size, Long id) throws Exception;
+
+    Page<PublicationPageDTO> listPaginationNotAprovved(Integer pageNumber, Integer size) throws Exception;
+
     Publication findById(Long id) throws Exception;
 
 }

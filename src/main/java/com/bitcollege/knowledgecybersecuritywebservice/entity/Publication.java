@@ -1,6 +1,5 @@
 package com.bitcollege.knowledgecybersecuritywebservice.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,6 +22,9 @@ public class Publication {
 
     @Column(columnDefinition="TEXT")
     private String firstParagraph;
+
+    @Column(columnDefinition = "boolean default false", nullable = true, updatable = true, insertable = true)
+    private Boolean isApprove;
 
     @Column(nullable = true)
     private String imageUrl;

@@ -56,6 +56,18 @@ public class PublicationController {
         }
     }
 
+    @GetMapping(value = "/listAll/{pageNumber}/{size}/{idUser}")
+    public ResponseEntity<?> findPaginationForUserId(@PathVariable Integer pageNumber, @PathVariable Integer size, @PathVariable Long idUser) {
+        try {
+            Page<PublicationPageDTO> publicationListPageForUserId = this.publicationService.listPaginationForUserId(pageNumber, size, idUser);
+            return ResponseEntity.status(HttpStatus.OK).body(publicationListPageForUserId);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e);
+        }
+    }
+
     @GetMapping(value = "/find/{id}")
     public ResponseEntity<?> findById(@PathVariable Long id) {
         try {

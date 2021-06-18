@@ -37,6 +37,8 @@ public class PublicationService implements IPublicationService {
         Publication publicationToSave = this.modelMapper.map(publicationDTO, Publication.class);
         publicationToSave.setId(null);
 
+        publicationToSave.setIsApprove(false);
+
         Publication publication = this.publicationRepository.save(publicationToSave);
 
         List<SectionPublication> sectionPublicationList = publicationDTO.getSectionPublications().stream().map(x-> {
@@ -55,6 +57,8 @@ public class PublicationService implements IPublicationService {
         return this.publicationRepository.save(publicationToUpdate);
     }
 
+
+
     @Override
     public List<Publication> list() throws Exception {
         return this.publicationRepository.findAll();
@@ -66,7 +70,43 @@ public class PublicationService implements IPublicationService {
 
         Pageable pageFiltered = PageRequest.of(pageNumber, size, Sort.by("id").descending());
 
-        Page<Publication> publicationsFinded = this.publicationRepository.findAll(pageFiltered);
+        //Page<Publication> publicationsFinded = this.publicationRepository.findAll(pageFiltered);
+        Page<Publication> publicationsFinded = this.publicationRepository.findByisApprove(true, pageFiltered);
+
+        Page<PublicationPageDTO>  publicationsFindedDTO= publicationsFinded.map(pagePublication -> {
+            PublicationPageDTO publicationPageDTO = this.modelMapper.map(pagePublication, PublicationPageDTO.class);
+            publicationPageDTO.setUserDTO(this.modelMapper.map(pagePublication.getUser(), GetUserDTO.class));
+            return publicationPageDTO;
+        });
+
+        return publicationsFindedDTO;
+    }
+
+    @Override
+    public Page<PublicationPageDTO> listPaginationNotAprovved(Integer pageNumber, Integer size) throws Exception {
+        size = (size > 20) ? 20 : size;
+
+        Pageable pageFiltered = PageRequest.of(pageNumber, size, Sort.by("id").descending());
+
+        //Page<Publication> publicationsFinded = this.publicationRepository.findAll(pageFiltered);
+        Page<Publication> publicationsFinded = this.publicationRepository.findByisApprove(false, pageFiltered);
+
+        Page<PublicationPageDTO>  publicationsFindedDTO= publicationsFinded.map(pagePublication -> {
+            PublicationPageDTO publicationPageDTO = this.modelMapper.map(pagePublication, PublicationPageDTO.class);
+            publicationPageDTO.setUserDTO(this.modelMapper.map(pagePublication.getUser(), GetUserDTO.class));
+            return publicationPageDTO;
+        });
+
+        return publicationsFindedDTO;
+    }
+
+    @Override
+    public Page<PublicationPageDTO> listPaginationForUserId(Integer pageNumber, Integer size, Long id) throws Exception {
+        size = (size > 20) ? 20 : size;
+
+        Pageable pageFiltered = PageRequest.of(pageNumber, size, Sort.by("id").descending());
+
+        Page<Publication> publicationsFinded = this.publicationRepository.findByUser_Id(id, pageFiltered);
 
         Page<PublicationPageDTO>  publicationsFindedDTO= publicationsFinded.map(pagePublication -> {
             PublicationPageDTO publicationPageDTO = this.modelMapper.map(pagePublication, PublicationPageDTO.class);
