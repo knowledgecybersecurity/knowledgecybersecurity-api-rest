@@ -25,4 +25,6 @@ public class GetUserDTO {
     
     private String address;
 
+    private String rol;
+
 }
