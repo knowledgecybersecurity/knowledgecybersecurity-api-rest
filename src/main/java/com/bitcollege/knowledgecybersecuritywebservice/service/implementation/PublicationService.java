@@ -5,6 +5,7 @@ import com.bitcollege.knowledgecybersecuritywebservice.data.ISectionPublicationR
 import com.bitcollege.knowledgecybersecuritywebservice.dto.GetUserDTO;
 import com.bitcollege.knowledgecybersecuritywebservice.dto.PublicationDTO;
 import com.bitcollege.knowledgecybersecuritywebservice.dto.PublicationPageDTO;
+import com.bitcollege.knowledgecybersecuritywebservice.dto.PublicationUpdateDTO;
 import com.bitcollege.knowledgecybersecuritywebservice.entity.Publication;
 import com.bitcollege.knowledgecybersecuritywebservice.entity.SectionPublication;
 import com.bitcollege.knowledgecybersecuritywebservice.service.IPublicationService;
@@ -15,6 +16,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -52,11 +54,29 @@ public class PublicationService implements IPublicationService {
     }
 
     @Override
-    public Publication update(PublicationDTO publicationDTO) throws Exception {
-        Publication publicationToUpdate = this.modelMapper.map(publicationDTO, Publication.class);
-        return this.publicationRepository.save(publicationToUpdate);
+    @Transactional
+    public Publication update(PublicationUpdateDTO publicationUpdateDTO, Long idPublication) throws Exception {
+        Publication publicationToUpdate = this.modelMapper.map(publicationUpdateDTO, Publication.class);
+        //this.sectionPublicationRepository
+        Publication pubCreated = this.publicationRepository.save(publicationToUpdate);
+        List<SectionPublication> sectionsToUpdate = pubCreated.getSectionPublications().stream().map(section ->{
+            section.setIdPublication(idPublication);
+            return section;
+        }).collect(Collectors.toList());
+        this.sectionPublicationRepository.saveAll(sectionsToUpdate);
+        return publicationToUpdate;
     }
 
+    @Override
+    public Publication aprobe(Long idPublication) throws Exception {
+        Publication publicationToEdit = this.publicationRepository.findById(idPublication).orElse(null);
+        if(publicationToEdit == null) {
+            throw new Exception("Publication doesn't exists");
+        }
+        publicationToEdit.setIsApprove(true);
+        Publication publicationSaved = this.publicationRepository.save(publicationToEdit);
+        return publicationSaved;
+    }
 
 
     @Override

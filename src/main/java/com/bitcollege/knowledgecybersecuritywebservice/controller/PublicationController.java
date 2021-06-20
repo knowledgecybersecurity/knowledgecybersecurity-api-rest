@@ -2,6 +2,7 @@ package com.bitcollege.knowledgecybersecuritywebservice.controller;
 
 import com.bitcollege.knowledgecybersecuritywebservice.dto.PublicationDTO;
 import com.bitcollege.knowledgecybersecuritywebservice.dto.PublicationPageDTO;
+import com.bitcollege.knowledgecybersecuritywebservice.dto.PublicationUpdateDTO;
 import com.bitcollege.knowledgecybersecuritywebservice.entity.Publication;
 import com.bitcollege.knowledgecybersecuritywebservice.service.IPublicationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,18 @@ public class PublicationController {
         }
     }
 
+    @PutMapping(value = "/update/{idUpdate}")
+    public ResponseEntity<?> update(@RequestBody PublicationUpdateDTO publicationUpdateDTO, @PathVariable Long idUpdate) {
+        try {
+            Publication publicationSaved = this.publicationService.update(publicationUpdateDTO, idUpdate);
+            return ResponseEntity.status(HttpStatus.OK).body(publicationSaved);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e);
+        }
+    }
+
     @GetMapping(value = "/listAll")
     public ResponseEntity<?> findAll() {
         try {
@@ -48,6 +61,30 @@ public class PublicationController {
     public ResponseEntity<?> findPagination(@PathVariable Integer pageNumber, @PathVariable Integer size) {
         try {
             Page<PublicationPageDTO> publicationListPage = this.publicationService.listPagination(pageNumber, size);
+            return ResponseEntity.status(HttpStatus.OK).body(publicationListPage);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e);
+        }
+    }
+
+    @GetMapping(value = "/aprobe/{idPublication}")
+    public ResponseEntity<?> aprobe(@PathVariable Long idPublication) {
+        try {
+            Publication publication = this.publicationService.aprobe(idPublication);
+            return ResponseEntity.status(HttpStatus.OK).body(publication);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e);
+        }
+    }
+
+    @GetMapping(value = "/listPaginationNotAprovved/{pageNumber}/{size}")
+    public ResponseEntity<?> listPaginationNotAprovved(@PathVariable Integer pageNumber, @PathVariable Integer size) {
+        try {
+            Page<PublicationPageDTO> publicationListPage = this.publicationService.listPaginationNotAprovved(pageNumber, size);
             return ResponseEntity.status(HttpStatus.OK).body(publicationListPage);
 
         } catch (Exception e) {
