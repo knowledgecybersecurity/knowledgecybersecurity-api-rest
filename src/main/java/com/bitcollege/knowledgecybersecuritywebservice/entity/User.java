@@ -40,6 +40,12 @@ public class User {
     
     @Column(nullable = true)
     private String address;
+
+    @Column(nullable = true)
+    private String secretQuestion;
+
+    @Column(nullable = true)
+    private String secretAnswer;
     
     @Column(nullable = false)
     private String rol;

@@ -2,9 +2,7 @@ package com.bitcollege.knowledgecybersecuritywebservice.service;
 
 import java.util.List;
 
-import com.bitcollege.knowledgecybersecuritywebservice.dto.CreateUserDTO;
-import com.bitcollege.knowledgecybersecuritywebservice.dto.GetUserDTO;
-import com.bitcollege.knowledgecybersecuritywebservice.dto.LoginResponse;
+import com.bitcollege.knowledgecybersecuritywebservice.dto.*;
 import com.bitcollege.knowledgecybersecuritywebservice.entity.Paper;
 import com.bitcollege.knowledgecybersecuritywebservice.entity.UserPaper;
 
@@ -25,4 +23,9 @@ public interface IUserService {
 	List<Paper> listUserFavoritePapers(Long idUser) throws Exception;
 
 	Boolean removeFavoritePaper(Long idUser, Long idPaper) throws Exception;
+
+	InitResetPasswordResponseDTO initResetPassword(String email) throws Exception;
+
+	ResetPasswordRequestDTO resetPassword(ResetPasswordRequestDTO resetPasswordRequestDTO) throws Exception;
+
 }

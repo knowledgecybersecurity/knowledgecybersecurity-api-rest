@@ -9,23 +9,9 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class CreateUserDTO {
-    private String firstName;
-    
-    private String lastName;
-    
+public class ResetPasswordRequestDTO {
     private String email;
-    
     private String password;
-    
-    private Integer age;
-    
-    private String country;
-    
-    private String address;
-
     private String secretQuestion;
-
     private String secretAnswer;
-
 }

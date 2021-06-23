@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.bitcollege.knowledgecybersecuritywebservice.data.IUserPaperRepository;
+import com.bitcollege.knowledgecybersecuritywebservice.dto.*;
 import com.bitcollege.knowledgecybersecuritywebservice.entity.Paper;
 import com.bitcollege.knowledgecybersecuritywebservice.entity.UserPaper;
 import org.modelmapper.ModelMapper;
@@ -15,9 +16,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.bitcollege.knowledgecybersecuritywebservice.data.IUserRepository;
-import com.bitcollege.knowledgecybersecuritywebservice.dto.CreateUserDTO;
-import com.bitcollege.knowledgecybersecuritywebservice.dto.GetUserDTO;
-import com.bitcollege.knowledgecybersecuritywebservice.dto.LoginResponse;
 import com.bitcollege.knowledgecybersecuritywebservice.entity.User;
 import com.bitcollege.knowledgecybersecuritywebservice.service.IUserService;
 
@@ -173,6 +171,34 @@ public class UserService implements IUserService {
 		List<UserPaper> userPapersToRemove = this.userPaperRepository.findByIdUserAndIdPaper(idUser, idPaper);
 		this.userPaperRepository.deleteAll(userPapersToRemove);
 		return true;
+	}
+
+	@Override
+	public InitResetPasswordResponseDTO initResetPassword(String email) throws Exception {
+		User userInDb = this.userRepo.findByEmail(email);
+		InitResetPasswordResponseDTO userInitResetPasswordResponseDTO = this.modelMapper.map(userInDb, InitResetPasswordResponseDTO.class);
+		return userInitResetPasswordResponseDTO;
+	}
+
+	@Override
+	public ResetPasswordRequestDTO resetPassword(ResetPasswordRequestDTO resetPasswordRequestDTO) throws Exception {
+		String email = resetPasswordRequestDTO.getEmail();
+		User userInDb = this.userRepo.findByEmail(email);
+
+		if(userInDb == null) {
+			throw new Exception("User doesn't exists");
+		}
+
+		if (resetPasswordRequestDTO.getSecretAnswer().equals(userInDb.getSecretAnswer())
+		&& resetPasswordRequestDTO.getSecretQuestion().equals(userInDb.getSecretQuestion())
+		) {
+			String encodePassword = this.bCrypt.encode(resetPasswordRequestDTO.getPassword());
+			userInDb.setPassword(encodePassword);
+			this.userRepo.save(userInDb);
+			return resetPasswordRequestDTO;
+		} else {
+			throw new Exception("Error at match");
+		}
 	}
 
 	@Override
